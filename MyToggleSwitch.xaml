@@ -1,0 +1,70 @@
+<!-- Стиль для CheckBox, имитирующий поведение ToggleSwitch -->
+<Style x:Key="ToggleSwitchStyle" TargetType="CheckBox">
+    <!-- Переопределение шаблона по умолчанию для CheckBox -->
+    <Setter Property="Template">
+        <Setter.Value>
+            <ControlTemplate TargetType="CheckBox">
+                <!-- Главный контейнер, состоящий из двух столбцов: для переключателя и текстовой метки -->
+                <Grid>
+                    <!-- Определение двух столбцов -->
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <!-- Граница вокруг переключателя -->
+                    <Border x:Name="SwitchBorder" Grid.Column="0" Width="40" Height="20" BorderBrush="#FF646464" BorderThickness="1" CornerRadius="10" Background="White">
+                        <!-- Прямоугольник, который действует как сам переключатель -->
+                        <Rectangle x:Name="Switch" Width="15" Height="15" Fill="DarkGray" Stroke="#FF646464" StrokeThickness="1" RadiusX="7.5" RadiusY="7.5" VerticalAlignment="Center" HorizontalAlignment="Left">
+                            <!-- Трансформация используется для анимации движения переключателя -->
+                            <Rectangle.RenderTransform>
+                                <TranslateTransform x:Name="SwitchTranslateTransform"/>
+                            </Rectangle.RenderTransform>
+                        </Rectangle>
+                    </Border>
+                    <!-- Текстовая метка, показывающая текущее состояние переключателя -->
+                    <TextBlock Grid.Column="1" x:Name="StateLabel" Text="Выключен" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                    <!-- Группы состояний, определяющие анимации для различных состояний CheckBox -->
+                    <VisualStateManager.VisualStateGroups>
+                        <!-- Группа состояний для включенного и выключенного состояний -->
+                        <VisualStateGroup x:Name="CheckStates">
+                            <!-- Анимации для включенного состояния -->
+                            <VisualState x:Name="Checked">
+                                <Storyboard>
+                                    <!-- Двигает переключатель вправо -->
+                                    <DoubleAnimation Storyboard.TargetName="SwitchTranslateTransform" Storyboard.TargetProperty="X" To="20" Duration="0:0:0.2"/>
+                                    <!-- Изменяет текст на "Включён" -->
+                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="StateLabel" Storyboard.TargetProperty="Text">
+                                        <DiscreteObjectKeyFrame KeyTime="0" Value="Включён"/>
+                                    </ObjectAnimationUsingKeyFrames>
+                                    <!-- Изменяет цвет переключателя на SkyBlue -->
+                                    <ColorAnimation Storyboard.TargetName="Switch" Storyboard.TargetProperty="Fill.Color" To="SkyBlue" Duration="0:0:0.2"/>
+                                    <!-- Изменяет цвет обводки переключателя на SkyBlue -->
+                                    <ColorAnimation Storyboard.TargetName="Switch" Storyboard.TargetProperty="Stroke.Color" To="SkyBlue" Duration="0:0:0.2"/>
+                                    <!-- Изменяет цвет границы на SkyBlue -->
+                                    <ColorAnimation Storyboard.TargetName="SwitchBorder" Storyboard.TargetProperty="BorderBrush.Color" To="SkyBlue" Duration="0:0:0.2"/>
+                                </Storyboard>
+                            </VisualState>
+                            <!-- Анимации для выключенного состояния -->
+                            <VisualState x:Name="Unchecked">
+                                <Storyboard>
+                                    <!-- Возвращает переключатель обратно влево -->
+                                    <DoubleAnimation Storyboard.TargetName="SwitchTranslateTransform" Storyboard.TargetProperty="X" To="0" Duration="0:0:0.2"/>
+                                    <!-- Изменяет текст на "Выключен" -->
+                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="StateLabel" Storyboard.TargetProperty="Text">
+                                        <DiscreteObjectKeyFrame KeyTime="0" Value="Выключен"/>
+                                    </ObjectAnimationUsingKeyFrames>
+                                    <!-- Возвращает цвет переключателя к DarkGray -->
+                                    <ColorAnimation Storyboard.TargetName="Switch" Storyboard.TargetProperty="Fill.Color" To="DarkGray" Duration="0:0:0.2"/>
+                                    <!-- Возвращает цвет обводки переключателя к начальному значению -->
+                                    <ColorAnimation Storyboard.TargetName="Switch" Storyboard.TargetProperty="Stroke.Color" To="#FF646464" Duration="0:0:0.2"/>
+                                    <!-- Возвращает цвет границы к начальному значению -->
+                                    <ColorAnimation Storyboard.TargetName="SwitchBorder" Storyboard.TargetProperty="BorderBrush.Color" To="#FF646464" Duration="0:0:0.2"/>
+                                </Storyboard>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateManager.VisualStateGroups>
+                </Grid>
+            </ControlTemplate>
+        </Setter.Value>
+    </Setter>
+</Style>
